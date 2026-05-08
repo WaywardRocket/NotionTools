@@ -1,180 +1,931 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Weekly Analysis — Rocket's Happy Space</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
   :root {
-    --bg: #0d0b14;
-    --bg2: #13101f;
-    --bg3: #1c1730;
-    --purple: #9b7fe8;
-    --purple-dim: #6b4fc8;
-    --pink: #e87fbe;
-    --green: #7fe8b0;
-    --yellow: #e8d47f;
-    --red: #e87f7f;
-    --text: #e8e0f5;
-    --text-dim: #8878aa;
-    --border: #2a2240;
-    --border-bright: #3d2f6e;
+    --bg: #0f0e17;
+    --surface: #1a1828;
+    --surface2: #231f35;
+    --border: #2e2a45;
+    --accent: #b8a9f5;
+    --accent2: #f5a9d0;
+    --green: #7efbb3;
+    --yellow: #f5e27e;
+    --red: #f57e7e;
+    --text: #e8e4f7;
+    --muted: #8a85a8;
+    --radius: 12px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
+    font-family: 'DM Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-family: 'Syne', sans-serif;
     min-height: 100vh;
-    padding: 2rem;
-    background-image:
-      radial-gradient(ellipse at 20% 20%, rgba(155, 127, 232, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(232, 127, 190, 0.06) 0%, transparent 60%);
+    padding: 0 0 80px;
   }
-  .header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; }
-  .logo { width: 40px; height: 40px; background: linear-gradient(135deg, var(--purple), var(--pink)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-  h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); }
-  h1 span { color: var(--purple); }
-  .subtitle { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); margin-top: 2px; }
-  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.25rem; }
-  .card-title { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1rem; }
-  .token-input { width: 100%; background: var(--bg3); border: 1px solid var(--border-bright); border-radius: 10px; padding: 12px 16px; color: var(--text); font-family: 'Space Mono', monospace; font-size: 13px; outline: none; margin-bottom: 12px; transition: border-color 0.2s; }
-  .token-input:focus { border-color: var(--purple); }
-  .token-input::placeholder { color: var(--text-dim); }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 10px; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; }
-  .btn-primary { background: linear-gradient(135deg, var(--purple-dim), var(--purple)); color: white; }
-  .btn-primary:hover { opacity: 0.85; transform: translateY(-1px); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-  .btn-ghost { background: transparent; border: 1px solid var(--border-bright); color: var(--text-dim); }
-  .btn-ghost:hover { border-color: var(--purple); color: var(--purple); }
-  .week-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 1.5rem; }
-  .week-label { flex: 1; text-align: center; font-family: 'Space Mono', monospace; font-size: 13px; color: var(--purple); }
-  .steps { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-  .step { font-family: 'Space Mono', monospace; font-size: 11px; padding: 4px 12px; border-radius: 99px; border: 1px solid var(--border); color: var(--text-dim); transition: all 0.2s; }
-  .step.active { background: var(--purple); border-color: var(--purple); color: white; }
-  .step.done { border-color: var(--green); color: var(--green); }
-  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 1.25rem; }
-  .metric { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; }
-  .metric-label { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); margin-bottom: 6px; text-transform: uppercase; }
-  .metric-val { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
-  .metric-val.good { color: var(--green); }
-  .metric-val.mid { color: var(--yellow); }
-  .metric-val.low { color: var(--red); }
-  .metric-val.purple { color: var(--purple); }
-  .habits-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1.25rem; }
-  .habit-item { display: flex; align-items: center; gap: 10px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; }
-  .habit-name { font-size: 12px; flex: 1; }
-  .habit-bar-wrap { width: 50px; background: var(--border); border-radius: 99px; height: 5px; overflow: hidden; }
-  .habit-bar { height: 5px; border-radius: 99px; }
-  .habit-count { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--text-dim); min-width: 28px; text-align: right; }
-  .sprint-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.25rem; }
-  .sprint-item { display: flex; align-items: center; gap: 12px; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
-  .sprint-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-  .sprint-name { font-size: 13px; flex: 1; }
-  .sprint-count { font-family: 'Space Mono', monospace; font-size: 12px; color: var(--text-dim); }
-  .analysis-box { background: var(--bg3); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem; position: relative; overflow: hidden; }
-  .analysis-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--purple), var(--pink)); }
-  .analysis-text { font-size: 14px; line-height: 1.8; color: var(--text); white-space: pre-wrap; }
-  .analysis-text.loading { color: var(--text-dim); font-family: 'Space Mono', monospace; font-size: 12px; }
-  .status { display: none; padding: 10px 14px; border-radius: 10px; font-family: 'Space Mono', monospace; font-size: 12px; margin-bottom: 1rem; }
-  .status.success { background: rgba(127,232,176,0.1); border: 1px solid rgba(127,232,176,0.3); color: var(--green); display: block; }
-  .status.error { background: rgba(232,127,127,0.1); border: 1px solid rgba(232,127,127,0.3); color: var(--red); display: block; }
-  .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
-  .section-label { font-family: 'Space Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 10px; }
-  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .pulsing { animation: pulse 1.5s infinite; }
+
+/* HEADER */
+.header {
+background: linear-gradient(135deg, #1a1828 0%, #231f35 100%);
+border-bottom: 1px solid var(–border);
+padding: 28px 32px 24px;
+display: flex;
+align-items: center;
+gap: 16px;
+}
+.header-icon { font-size: 32px; }
+.header-text h1 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 22px;
+color: var(–accent);
+letter-spacing: -0.3px;
+}
+.header-text p {
+font-size: 12px;
+color: var(–muted);
+margin-top: 2px;
+font-family: ‘DM Mono’, monospace;
+letter-spacing: 0.5px;
+}
+
+/* MAIN LAYOUT */
+.container { max-width: 780px; margin: 0 auto; padding: 32px 20px 0; }
+
+/* TOKEN SETUP */
+#setup-section {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 32px;
+margin-bottom: 24px;
+}
+#setup-section h2 {
+font-family: ‘DM Serif Display’, serif;
+font-size: 18px;
+color: var(–accent);
+margin-bottom: 8px;
+}
+#setup-section p {
+font-size: 13px;
+color: var(–muted);
+margin-bottom: 20px;
+line-height: 1.6;
+}
+.token-row { display: flex; gap: 10px; }
+.token-input {
+flex: 1;
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 8px;
+color: var(–text);
+font-family: ‘DM Mono’, monospace;
+font-size: 13px;
+padding: 11px 14px;
+outline: none;
+transition: border-color 0.2s;
+}
+.token-input:focus { border-color: var(–accent); }
+.btn {
+background: var(–accent);
+color: var(–bg);
+border: none;
+border-radius: 8px;
+padding: 11px 20px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+transition: opacity 0.2s;
+white-space: nowrap;
+}
+.btn:hover { opacity: 0.85; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-ghost {
+background: transparent;
+color: var(–accent);
+border: 1px solid var(–border);
+}
+.btn-ghost:hover { border-color: var(–accent); background: rgba(184,169,245,0.06); }
+
+/* WEEK NAV */
+#main-section { display: none; }
+.week-nav {
+display: flex;
+align-items: center;
+justify-content: space-between;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 16px 20px;
+margin-bottom: 16px;
+}
+.week-label {
+font-family: ‘DM Serif Display’, serif;
+font-size: 17px;
+color: var(–text);
+}
+.nav-btns { display: flex; gap: 8px; }
+
+/* PROGRESS STEPS */
+.steps {
+display: flex;
+align-items: center;
+gap: 0;
+margin-bottom: 24px;
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 14px 20px;
+overflow-x: auto;
+}
+.step {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–muted);
+white-space: nowrap;
+padding: 4px 8px;
+border-radius: 6px;
+transition: all 0.3s;
+}
+.step.active { color: var(–accent); background: rgba(184,169,245,0.12); }
+.step.done { color: var(–green); }
+.step-arrow { color: var(–border); font-size: 10px; padding: 0 2px; }
+
+/* CARDS */
+.card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: var(–radius);
+padding: 24px;
+margin-bottom: 16px;
+}
+.card-title {
+font-family: ‘DM Serif Display’, serif;
+font-size: 15px;
+color: var(–accent);
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+/* METRICS */
+.metrics-row {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+gap: 12px;
+margin-bottom: 16px;
+}
+.metric {
+background: var(–surface2);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 16px;
+text-align: center;
+}
+.metric-label {
+font-size: 10px;
+color: var(–muted);
+font-family: ‘DM Mono’, monospace;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+margin-bottom: 6px;
+}
+.metric-value {
+font-family: ‘DM Serif Display’, serif;
+font-size: 26px;
+line-height: 1;
+}
+.metric-value.good { color: var(–green); }
+.metric-value.mid { color: var(–yellow); }
+.metric-value.low { color: var(–red); }
+.metric-value.neutral { color: var(–text); }
+
+/* HABITS LIST */
+.habit-item {
+display: flex;
+align-items: center;
+gap: 12px;
+padding: 10px 0;
+border-bottom: 1px solid var(–border);
+}
+.habit-item:last-child { border-bottom: none; }
+.habit-name { flex: 1; font-size: 13px; }
+.habit-bar-wrap {
+width: 100px;
+height: 6px;
+background: var(–surface2);
+border-radius: 3px;
+overflow: hidden;
+}
+.habit-bar { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+.habit-count { font-family: ‘DM Mono’, monospace; font-size: 11px; color: var(–muted); width: 36px; text-align: right; }
+
+/* SPRINT LIST */
+.sprint-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 14px;
+border-radius: 8px;
+margin-bottom: 8px;
+border-left: 3px solid;
+}
+.sprint-name { font-size: 13px; }
+.sprint-count {
+font-family: ‘DM Mono’, monospace;
+font-size: 12px;
+color: var(–muted);
+}
+
+/* ANALYSIS */
+.analysis-text {
+font-size: 14px;
+line-height: 1.8;
+color: var(–text);
+white-space: pre-wrap;
+}
+.analysis-text.loading { color: var(–muted); font-style: italic; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.pulsing { animation: pulse 1.8s ease-in-out infinite; }
+.analysis-actions { display: flex; gap: 10px; margin-top: 16px; }
+
+/* STATUS */
+.status { font-family: ‘DM Mono’, monospace; font-size: 12px; padding: 8px 0; min-height: 28px; }
+.status.success { color: var(–green); }
+.status.error { color: var(–red); }
+
+/* LOADING / ERROR */
+.loading-state, .error-state {
+text-align: center;
+padding: 48px 24px;
+color: var(–muted);
+}
+.loading-dots span {
+display: inline-block;
+width: 8px; height: 8px;
+background: var(–accent);
+border-radius: 50%;
+margin: 0 3px;
+animation: bounce 1.2s ease-in-out infinite;
+}
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+.loading-label { font-family: ‘DM Mono’, monospace; font-size: 12px; color: var(–muted); margin-top: 16px; }
+
+/* DISCONNECT */
+.disconnect-wrap { text-align: right; margin-bottom: 8px; }
+.disconnect-btn {
+background: none; border: none;
+font-size: 11px; color: var(–muted);
+cursor: pointer; font-family: ‘DM Mono’, monospace;
+text-decoration: underline;
+}
+.disconnect-btn:hover { color: var(–text); }
+
+/* MOOD CHIPS */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.chip {
+font-size: 11px;
+font-family: ‘DM Mono’, monospace;
+padding: 4px 10px;
+border-radius: 20px;
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–muted);
+}
+
+@media (max-width: 500px) {
+.header { padding: 20px 16px; }
+.container { padding: 20px 12px 0; }
+.metrics-row { grid-template-columns: 1fr 1fr; }
+}
 </style>
+
 </head>
 <body>
+
 <div class="header">
-  <div class="logo">🚀</div>
-  <div>
-    <h1>Rocket's <span>Weekly Analysis</span></h1>
-    <div class="subtitle">habits · tasks · mood · growth</div>
+  <div class="header-icon">🚀</div>
+  <div class="header-text">
+    <h1>Rocket's Weekly Analysis</h1>
+    <p>habits · tasks · mood · growth</p>
   </div>
 </div>
-<div id="setup-section" class="card">
-  <div class="card-title">Connect to Notion</div>
-  <p style="font-size:13px;color:var(--text-dim);margin-bottom:14px;line-height:1.6;">Paste your Notion integration token below. It's used only to read your habit and task data and write the analysis back to your Weekly Analysis database.</p>
-  <input class="token-input" type="password" id="token-input" placeholder="Paste your Notion integration token" />
-  <button class="btn btn-primary" onclick="saveToken()">Connect →</button>
-  <div id="setup-error"></div>
-</div>
-<div id="main-section" style="display:none;">
-  <div class="week-nav">
+
+<div class="container">
+
+  <!-- SETUP -->
+
+  <div id="setup-section">
+    <h2>Connect to Notion</h2>
+    <p>Paste your Notion integration token below. It's stored only in your browser session and used to read your habit and task data.</p>
+    <div class="token-row">
+      <input type="password" id="token-input" class="token-input" placeholder="secret_xxxxxxxxxxxxxxxx" autocomplete="off"/>
+      <button class="btn" onclick="connect()">Connect →</button>
+    </div>
+    <p id="setup-error" style="color:var(--red);font-size:12px;margin-top:10px;"></p>
+  </div>
+
+  <!-- MAIN -->
+
+  <div id="main-section">
+    <div class="disconnect-wrap">
+      <button class="disconnect-btn" onclick="disconnect()">✕ disconnect</button>
+    </div>
+
+```
+<!-- Week nav -->
+<div class="week-nav">
+  <div class="nav-btns">
     <button class="btn btn-ghost" onclick="changeWeek(-1)">← Prev</button>
-    <span class="week-label" id="week-label"></span>
+  </div>
+  <div class="week-label" id="week-label">—</div>
+  <div class="nav-btns">
     <button class="btn btn-ghost" onclick="changeWeek(1)">Next →</button>
   </div>
-  <div class="steps">
-    <span class="step" id="step1">1 · Fetch habits</span>
-    <span style="color:var(--text-dim);font-size:12px;align-self:center;">→</span>
-    <span class="step" id="step2">2 · Fetch tasks</span>
-    <span style="color:var(--text-dim);font-size:12px;align-self:center;">→</span>
-    <span class="step" id="step3">3 · Fetch mood</span>
-    <span style="color:var(--text-dim);font-size:12px;align-self:center;">→</span>
-    <span class="step" id="step4">4 · Generate</span>
-    <span style="color:var(--text-dim);font-size:12px;align-self:center;">→</span>
-    <span class="step" id="step5">5 · Save to Notion</span>
+</div>
+
+<!-- Steps -->
+<div class="steps">
+  <div class="step" id="step1">1 · Habits</div>
+  <div class="step-arrow">›</div>
+  <div class="step" id="step2">2 · Tasks</div>
+  <div class="step-arrow">›</div>
+  <div class="step" id="step3">3 · Mood</div>
+  <div class="step-arrow">›</div>
+  <div class="step" id="step4">4 · Generate</div>
+  <div class="step-arrow">›</div>
+  <div class="step" id="step5">5 · Save</div>
+</div>
+
+<!-- Loading -->
+<div class="loading-state" id="loading-state" style="display:none">
+  <div class="loading-dots"><span></span><span></span><span></span></div>
+  <div class="loading-label" id="loading-label">Loading your data...</div>
+</div>
+
+<!-- Error -->
+<div class="error-state" id="error-state" style="display:none"></div>
+
+<!-- Data -->
+<div id="data-section" style="display:none">
+
+  <!-- Metrics -->
+  <div class="metrics-row" id="metrics-row"></div>
+
+  <!-- Habits -->
+  <div class="card">
+    <div class="card-title">🌅 Morning habits</div>
+    <div id="habits-list"></div>
   </div>
-  <div id="status-msg"></div>
-  <div id="loading-state" class="section-label pulsing">Loading your data...</div>
-  <div id="error-state"></div>
-  <div id="data-section" style="display:none;">
-    <div class="metrics" id="metrics-row"></div>
-    <hr class="divider">
-    <div class="section-label">Morning habits</div>
-    <div class="habits-list" id="habits-list"></div>
-    <hr class="divider">
-    <div class="section-label">Tasks by sprint</div>
-    <div class="sprint-list" id="sprint-list"></div>
-    <hr class="divider">
-    <div class="section-label">AI analysis</div>
-    <div class="analysis-box">
-      <p class="analysis-text loading pulsing" id="analysis-text">Generating your weekly analysis...</p>
+
+  <!-- Sprints -->
+  <div class="card">
+    <div class="card-title">⚡ Tasks by sprint</div>
+    <div id="sprint-list"></div>
+  </div>
+
+  <!-- Mood -->
+  <div class="card" id="mood-card" style="display:none">
+    <div class="card-title">🌡 Mood &amp; energy</div>
+    <div style="margin-bottom:10px">
+      <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px">MOOD</div>
+      <div class="chips" id="mood-chips"></div>
     </div>
-    <div class="btn-row">
-      <button class="btn btn-primary" id="regen-btn" onclick="regenerate()">Regenerate ↺</button>
-      <button class="btn btn-ghost" onclick="copyAnalysis()">Copy text</button>
+    <div>
+      <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px">ENERGY</div>
+      <div class="chips" id="energy-chips"></div>
     </div>
+  </div>
+
+  <!-- Analysis -->
+  <div class="card">
+    <div class="card-title">✨ AI analysis</div>
+    <div class="analysis-text loading pulsing" id="analysis-text">Generating your weekly analysis...</div>
+    <div class="analysis-actions">
+      <button class="btn btn-ghost" id="regen-btn" onclick="generateAnalysis()" disabled>Regenerate ↺</button>
+      <button class="btn btn-ghost" id="copy-btn" onclick="copyAnalysis()" style="display:none">Copy text</button>
+    </div>
+    <div class="status" id="status-msg"></div>
+  </div>
+
+</div>
+```
+
   </div>
 </div>
-<script>
-const HABITS_DB = "2cb390aa-2e13-83e9-8457-81016aa87e4c";
-const TASKS_DB = "061390aa-2e13-8237-8af4-0138ab4474d5";
-const JOURNAL_DB = "4fa390aa2e1382d6b04101eea6981632";
-const ANALYSIS_DB = "67d8d6ca-90c4-4f24-9ffc-cfb0a42d0dab";
-const HABITS = ["💧 Hydrate","🎵 Play Morning Playlist","🐱 Feed the Cats","🧹 Tidy Workspace & Kitchen","📖 Read Poetry","📓 Journal","📋 Set Up Rapid Log in BuJo","📖 Read Bible","🙏 Pray"];
-const SPRINT_COLORS = {"1 - Urgent":"#e87f7f","2 - Deadlines":"#e8b47f","3 - Admin & Chores":"#e8d47f","4 - Creative Work":"#9b7fe8"};
-let token="",weekOffset=0,habitData=null,taskData=null,journalData=null,currentStart=null,currentEnd=null;
-function setStep(n){[1,2,3,4,5].forEach(i=>{const el=document.getElementById("step"+i);el.className="step"+(i<n?" done":i===n?" active":"");});}
-function showStatus(msg,type){const el=document.getElementById("status-msg");el.textContent=msg;el.className="status "+type;}
-function saveToken(){const val=document.getElementById("token-input").value.trim();if(!val){document.getElementById("setup-error").innerHTML='<div class="status error" style="margin-top:10px;">Please paste your integration token.</div>';return;}token=val;document.getElementById("setup-section").style.display="none";document.getElementById("main-section").style.display="block";loadWeek();}
-function getWeekRange(offset){const now=new Date();const monday=new Date(now);monday.setDate(now.getDate()-((now.getDay()+6)%7)+offset*7);monday.setHours(0,0,0,0);const sunday=new Date(monday);sunday.setDate(monday.getDate()+6);return{start:monday,end:sunday};}
-function fmtDate(d){return d.toISOString().split("T")[0];}
-function fmtDisplay(d){return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});}
-function changeWeek(dir){weekOffset+=dir;loadWeek();}
-async function callClaude(prompt,tools){const body={model:"claude-sonnet-4-20250514",max_tokens:1500,messages:[{role:"user",content:prompt}]};if(tools)body.tools=tools;const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});const data=await res.json();if(data.error)throw new Error(data.error.message);return data;}
-async function loadWeek(){const{start,end}=getWeekRange(weekOffset);currentStart=start;currentEnd=end;document.getElementById("week-label").textContent=fmtDisplay(start)+" – "+fmtDisplay(end);document.getElementById("loading-state").style.display="block";document.getElementById("data-section").style.display="none";document.getElementById("error-state").style.display="none";document.getElementById("status-msg").className="status";setStep(1);
-try{const habitPrompt=`Fetch Good Habits data from Notion for ${fmtDate(start)} to ${fmtDate(end)}.\nPOST https://api.notion.com/v1/databases/${HABITS_DB}/query\nAuthorization: Bearer ${token}\nNotion-Version: 2022-06-28\nBody: {"filter":{"and":[{"property":"Date","date":{"on_or_after":"${fmtDate(start)}"}},{"property":"Date","date":{"on_or_before":"${fmtDate(end)}"}}]}}\nCount how many entries exist per habit name and how many have Habit Done = true.\nReturn ONLY JSON: {"days":<unique dates count>,"habits":[{"name":<name>,"done":<done count>,"total":<total entries>}]}`;
-const habitRes=await callClaude(habitPrompt,[{type:"web_search_20250305",name:"web_search"}]);const habitText=habitRes.content?.find(b=>b.type==="text")?.text||"{}";habitData=JSON.parse(habitText.replace(/```json|```/g,"").trim());setStep(2);
-const taskPrompt=`Fetch Tasks data from Notion for ${fmtDate(start)} to ${fmtDate(end)}.\nPOST https://api.notion.com/v1/databases/${TASKS_DB}/query\nAuthorization: Bearer ${token}\nNotion-Version: 2022-06-28\nBody: {"filter":{"and":[{"property":"Due","date":{"on_or_after":"${fmtDate(start)}"}},{"property":"Due","date":{"on_or_before":"${fmtDate(end)}"}}]}}\nCount tasks by Status and Sprint category. Calculate average Time Variance.\nReturn ONLY JSON: {"total":<n>,"done":<n>,"missed":<n>,"in_progress":<n>,"sprints":{"1 - Urgent":<n>,"2 - Deadlines":<n>,"3 - Admin & Chores":<n>,"4 - Creative Work":<n>},"avg_time_variance":<number or null>,"life_areas":[<list of unique life area names>]}`;
-const taskRes=await callClaude(taskPrompt,[{type:"web_search_20250305",name:"web_search"}]);const taskText=taskRes.content?.find(b=>b.type==="text")?.text||"{}";taskData=JSON.parse(taskText.replace(/```json|```/g,"").trim());setStep(3);
-const journalPrompt=`Fetch Daily Journal entries from Notion for ${fmtDate(start)} to ${fmtDate(end)}.\nPOST https://api.notion.com/v1/databases/${JOURNAL_DB}/query\nAuthorization: Bearer ${token}\nNotion-Version: 2022-06-28\nBody: {"filter":{"and":[{"property":"Date","date":{"on_or_after":"${fmtDate(start)}"}},{"property":"Date","date":{"on_or_before":"${fmtDate(end)}"}}]}}\nList all Mood and Energy values.\nReturn ONLY JSON: {"entries":<count>,"moods":[<list>],"energies":[<list>]}`;
-const journalRes=await callClaude(journalPrompt,[{type:"web_search_20250305",name:"web_search"}]);const journalText=journalRes.content?.find(b=>b.type==="text")?.text||"{}";journalData=JSON.parse(journalText.replace(/```json|```/g,"").trim());
-document.getElementById("loading-state").style.display="none";document.getElementById("data-section").style.display="block";renderData();
-}catch(e){document.getElementById("loading-state").style.display="none";document.getElementById("error-state").innerHTML=`<div class="status error">Could not load data: ${e.message}</div>`;}}
-function renderData(){const habits=habitData?.habits||[];const totalDone=habits.reduce((s,h)=>s+(h.done||0),0);const totalSlots=habits.reduce((s,h)=>s+(h.total||0),0);const habitPct=totalSlots>0?Math.round((totalDone/totalSlots)*100):0;const taskDone=taskData?.done||0;const taskTotal=taskData?.total||0;const completionRate=taskTotal>0?Math.round((taskDone/taskTotal)*100):0;const variance=taskData?.avg_time_variance;const hClass=habitPct>=70?"good":habitPct>=40?"mid":"low";const tClass=completionRate>=70?"good":completionRate>=40?"mid":"low";
-document.getElementById("metrics-row").innerHTML=`<div class="metric"><div class="metric-label">Days logged</div><div class="metric-val purple">${habitData?.days||0}</div></div><div class="metric"><div class="metric-label">Habit completion</div><div class="metric-val ${hClass}">${habitPct}%</div></div><div class="metric"><div class="metric-label">Tasks done</div><div class="metric-val ${tClass}">${taskDone}/${taskTotal}</div></div><div class="metric"><div class="metric-label">Tasks missed</div><div class="metric-val ${(taskData?.missed||0)>3?"low":"mid"}">${taskData?.missed||0}</div></div>${variance!==null&&variance!==undefined?`<div class="metric"><div class="metric-label">Avg time variance</div><div class="metric-val ${Math.abs(variance)<15?"good":"mid"}">${variance>0?"+":""}${Math.round(variance)}m</div></div>`:""}`;
-const sorted=[...habits].sort((a,b)=>(b.done/Math.max(b.total,1))-(a.done/Math.max(a.total,1)));document.getElementById("habits-list").innerHTML=sorted.map(h=>{const pct=h.total>0?Math.round((h.done/h.total)*100):0;const bc=pct>=70?"var(--green)":pct>=40?"var(--yellow)":"var(--red)";return`<div class="habit-item"><span class="habit-name">${h.name}</span><div class="habit-bar-wrap"><div class="habit-bar" style="width:${pct}%;background:${bc};"></div></div><span class="habit-count">${h.done}/${h.total}</span></div>`;}).join("");
-const sprints=taskData?.sprints||{};document.getElementById("sprint-list").innerHTML=Object.entries(sprints).map(([name,count])=>`<div class="sprint-item"><div class="sprint-dot" style="background:${SPRINT_COLORS[name]||"var(--purple)"};"></div><span class="sprint-name">${name}</span><span class="sprint-count">${count} tasks</span></div>`).join("");
-generateAnalysis();}
-async function generateAnalysis(){setStep(4);const el=document.getElementById("analysis-text");el.textContent="Generating your weekly analysis...";el.className="analysis-text loading pulsing";document.getElementById("regen-btn").disabled=true;
-const weekStr=fmtDisplay(currentStart)+" – "+fmtDisplay(currentEnd);const habits=habitData?.habits||[];const topHabits=habits.filter(h=>h.total>0&&(h.done/h.total)>=0.7).map(h=>h.name).join(", ")||"none";const lowHabits=habits.filter(h=>h.total>0&&(h.done/h.total)<0.4).map(h=>h.name).join(", ")||"none";const sprints=taskData?.sprints||{};const topSprint=Object.entries(sprints).sort((a,b)=>b[1]-a[1])[0]?.[0]||"unknown";const lifeAreas=taskData?.life_areas||[];const moods=journalData?.moods||[];const energies=journalData?.energies||[];const variance=taskData?.avg_time_variance;const habitPct=Math.round((habits.reduce((s,h)=>s+(h.done||0),0)/Math.max(habits.reduce((s,h)=>s+(h.total||0),0),1))*100);
-try{const res=await callClaude(`You are a warm, insightful life coach for a neurodivergent (AuDHD) freelance illustrator and designer building healthy habits and a creative practice.\n\nWeek of ${weekStr}:\n\nMORNING HABITS:\n- Overall completion: ${habitPct}%\n- Strong habits (≥70%): ${topHabits}\n- Needs attention (<40%): ${lowHabits}\n\nTASKS:\n- Total: ${taskData?.total||0}, Done: ${taskData?.done||0}, Missed: ${taskData?.missed||0}\n- Completion rate: ${taskTotal>0?Math.round(((taskData?.done||0)/(taskData?.total||1))*100):0}%\n- Most active sprint: ${topSprint}\n- Sprint breakdown: ${JSON.stringify(sprints)}\n- Life areas covered: ${lifeAreas.join(", ")||"not tracked yet"}\n- Avg time variance: ${variance!==null&&variance!==undefined?(variance>0?"+"+Math.round(variance)+" min (taking longer than estimated)":Math.round(variance)+" min (finishing faster than estimated)"):"not enough data yet"}\n\nMOOD & ENERGY:\n- Moods: ${moods.join(", ")||"not logged"}\n- Energy: ${energies.join(", ")||"not logged"}\n\nWrite a personal weekly analysis in 4 short paragraphs:\n1. Honest overall read of the week\n2. Specific wins worth celebrating\n3. Growth edges with one tiny concrete suggestion each\n4. Cross-pattern insight — something interesting about how mood/energy/habits/tasks relate\n\nWarm, direct, curious tone. No bullet points. No headers. Under 250 words.`);
-const text=res.content?.find(b=>b.type==="text")?.text||"Could not generate analysis.";el.textContent=text;el.className="analysis-text";document.getElementById("regen-btn").disabled=false;await saveToNotion(text);}catch(e){el.textContent="Could not generate analysis. Try again.";el.className="analysis-text";document.getElementById("regen-btn").disabled=false;}}
-async function saveToNotion(analysis){setStep(5);showStatus("Saving to Notion...","success");const weekLabel=fmtDisplay(currentStart)+" – "+fmtDisplay(currentEnd);const habits=habitData?.habits||[];const habitPct=Math.round((habits.reduce((s,h)=>s+(h.done||0),0)/Math.max(habits.reduce((s,h)=>s+(h.total||0),0),1))*100);const sprints=taskData?.sprints||{};const topSprint=Object.entries(sprints).sort((a,b)=>b[1]-a[1])[0]?.[0]||"";const lowHabits=habits.filter(h=>h.total>0&&(h.done/h.total)<0.4).map(h=>h.name).join(", ")||"none";const moods=(journalData?.moods||[]).join(", ")||"";const energies=(journalData?.energies||[]).join(", ")||"";
-const prompt=`Save a weekly analysis entry to Notion.\nPOST https://api.notion.com/v1/pages\nAuthorization: Bearer ${token}\nNotion-Version: 2022-06-28\nContent-Type: application/json\​​​​​​​​​​​​​​​​
 
+<script>
+// ─── CONFIG ───────────────────────────────────────────────
+const HABITS_DB   = "2cb390aa-2e13-83e9-8457-81016aa87e4c";
+const TASKS_DB    = "061390aa-2e13-8237-8af4-0138ab4474d5";
+const JOURNAL_DB  = "4fa390aa-2e13-82d6-b041-01eea6981632";
+const ANALYSIS_DB = "67d8d6ca-90c4-4f24-9ffc-cfb0a42d0dab";
+
+const SPRINT_COLORS = {
+  "1 - Urgent":         "#e87f7f",
+  "2 - Deadlines":      "#e8b47f",
+  "3 - Admin & Chores": "#e8d47f",
+  "4 - Creative Work":  "#9b7fe8"
+};
+
+// ─── STATE ────────────────────────────────────────────────
+let token = "", weekOffset = 0;
+let habitData = null, taskData = null, journalData = null;
+let currentStart = null, currentEnd = null;
+
+// ─── NOTION API ───────────────────────────────────────────
+async function notionQuery(dbId, filter) {
+  const res = await fetch(`https://api.notion.com/v1/databases/${dbId}/query`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Notion-Version": "2022-06-28",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(filter ? { filter } : {})
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Notion API error ${res.status}`);
+  }
+  return res.json();
+}
+
+async function notionCreate(payload) {
+  const res = await fetch("https://api.notion.com/v1/pages", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Notion-Version": "2022-06-28",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Notion API error ${res.status}`);
+  }
+  return res.json();
+}
+
+// ─── CLAUDE API ───────────────────────────────────────────
+async function callClaude(prompt) {
+  const res = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: "claude-sonnet-4-20250514",
+      max_tokens: 1000,
+      messages: [{ role: "user", content: prompt }]
+    })
+  });
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.content?.find(b => b.type === "text")?.text || "";
+}
+
+// ─── AUTH ─────────────────────────────────────────────────
+function connect() {
+  const val = document.getElementById("token-input").value.trim();
+  if (!val) {
+    document.getElementById("setup-error").textContent = "Please paste your integration token.";
+    return;
+  }
+  token = val;
+  document.getElementById("setup-section").style.display = "none";
+  document.getElementById("main-section").style.display = "block";
+  loadWeek();
+}
+
+function disconnect() {
+  token = "";
+  weekOffset = 0;
+  habitData = taskData = journalData = null;
+  document.getElementById("token-input").value = "";
+  document.getElementById("setup-error").textContent = "";
+  document.getElementById("main-section").style.display = "none";
+  document.getElementById("setup-section").style.display = "block";
+}
+
+// ─── WEEK RANGE ───────────────────────────────────────────
+function getWeekRange(offset) {
+  const now = new Date();
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7) + offset * 7);
+  monday.setHours(0, 0, 0, 0);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+  return { start: monday, end: sunday };
+}
+
+function fmtDate(d) { return d.toISOString().split("T")[0]; }
+function fmtDisplay(d) {
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+function changeWeek(dir) { weekOffset += dir; loadWeek(); }
+
+// ─── STEPS ────────────────────────────────────────────────
+function setStep(n) {
+  [1,2,3,4,5].forEach(i => {
+    const el = document.getElementById("step" + i);
+    el.className = "step" + (i < n ? " done" : i === n ? " active" : "");
+  });
+}
+
+function setLoading(label) {
+  document.getElementById("loading-label").textContent = label;
+  document.getElementById("loading-state").style.display = "block";
+  document.getElementById("data-section").style.display = "none";
+  document.getElementById("error-state").style.display = "none";
+}
+
+function showStatus(msg, type) {
+  const el = document.getElementById("status-msg");
+  el.textContent = msg;
+  el.className = "status " + type;
+}
+
+// ─── LOAD WEEK ────────────────────────────────────────────
+async function loadWeek() {
+  const { start, end } = getWeekRange(weekOffset);
+  currentStart = start; currentEnd = end;
+  document.getElementById("week-label").textContent = fmtDisplay(start) + " – " + fmtDisplay(end);
+  document.getElementById("status-msg").className = "status";
+  document.getElementById("status-msg").textContent = "";
+
+  setLoading("Fetching habits...");
+  setStep(1);
+
+  try {
+    // 1. HABITS
+    const dateFilter = {
+      and: [
+        { property: "Date", date: { on_or_after: fmtDate(start) } },
+        { property: "Date", date: { on_or_before: fmtDate(end) } }
+      ]
+    };
+
+    const habitsRes = await notionQuery(HABITS_DB, dateFilter);
+    habitData = parseHabits(habitsRes.results);
+    setStep(2);
+
+    // 2. TASKS
+    setLoading("Fetching tasks...");
+    const tasksRes = await notionQuery(TASKS_DB, dateFilter);
+    taskData = parseTasks(tasksRes.results);
+    setStep(3);
+
+    // 3. JOURNAL
+    setLoading("Fetching mood & energy...");
+    const journalRes = await notionQuery(JOURNAL_DB, dateFilter);
+    journalData = parseJournal(journalRes.results);
+
+    // Done loading — render
+    document.getElementById("loading-state").style.display = "none";
+    document.getElementById("data-section").style.display = "block";
+    renderData();
+
+  } catch(e) {
+    document.getElementById("loading-state").style.display = "none";
+    document.getElementById("error-state").style.display = "block";
+    document.getElementById("error-state").innerHTML =
+      `<p style="color:var(--red);font-family:'DM Mono',monospace;font-size:13px">⚠ ${e.message}</p>
+       <p style="margin-top:8px;font-size:12px;color:var(--muted)">Check that your token has access to all three databases.</p>`;
+  }
+}
+
+// ─── PARSERS ──────────────────────────────────────────────
+function getProp(page, name) {
+  return page.properties?.[name];
+}
+
+function parseHabits(pages) {
+  // Group by date, then by habit name
+  const byName = {};
+  const days = new Set();
+
+  pages.forEach(page => {
+    const props = page.properties;
+
+    // Get date
+    const dateVal = props?.["Date"]?.date?.start || props?.["Date"]?.formula?.date?.start;
+    if (dateVal) days.add(dateVal);
+
+    // Each habit is tracked as its own property (checkbox or formula)
+    // Try to find habit-named checkboxes
+    Object.entries(props || {}).forEach(([key, val]) => {
+      if (val?.type === "checkbox") {
+        if (!byName[key]) byName[key] = { done: 0, total: 0 };
+        byName[key].total++;
+        if (val.checkbox) byName[key].done++;
+      }
+    });
+
+    // Fallback: look for "Habit Name" + "Habit Done" pattern
+    const habitName = props?.["Habit"]?.title?.[0]?.plain_text ||
+                      props?.["Name"]?.title?.[0]?.plain_text ||
+                      props?.["Habit Name"]?.rich_text?.[0]?.plain_text;
+    const habitDone = props?.["Habit Done"]?.checkbox ||
+                      props?.["Done"]?.checkbox ||
+                      props?.["Completed"]?.checkbox;
+
+    if (habitName) {
+      if (!byName[habitName]) byName[habitName] = { done: 0, total: 0 };
+      byName[habitName].total++;
+      if (habitDone) byName[habitName].done++;
+    }
+  });
+
+  return {
+    days: days.size,
+    habits: Object.entries(byName).map(([name, v]) => ({ name, done: v.done, total: v.total }))
+  };
+}
+
+function parseTasks(pages) {
+  let done = 0, missed = 0, inProgress = 0, total = 0;
+  const sprints = {};
+  const lifeAreas = new Set();
+  let varianceSum = 0, varianceCount = 0;
+
+  pages.forEach(page => {
+    const props = page.properties;
+    total++;
+
+    const status = props?.["Status"]?.status?.name || props?.["Status"]?.select?.name || "";
+    const sprint  = props?.["Sprint"]?.select?.name || "";
+    const variance = props?.["Time Variance (min)"]?.formula?.number ??
+                     props?.["Time Variance"]?.number ?? null;
+
+    // Status buckets
+    const statusLower = status.toLowerCase();
+    if (statusLower === "done" || statusLower === "completed" || statusLower === "✅") done++;
+    else if (statusLower === "missed" || statusLower === "cancelled" || statusLower === "❌") missed++;
+    else inProgress++;
+
+    // Sprints
+    if (sprint) {
+      sprints[sprint] = (sprints[sprint] || 0) + 1;
+    }
+
+    // Life areas (relation property)
+    const laRel = props?.["Life Area"]?.relation || props?.["Life Areas"]?.relation || [];
+    laRel.forEach(r => r.id && lifeAreas.add(r.id));
+
+    // Time variance
+    if (variance !== null && !isNaN(variance)) {
+      varianceSum += variance;
+      varianceCount++;
+    }
+  });
+
+  return {
+    total, done, missed, inProgress,
+    sprints,
+    life_areas: [...lifeAreas],
+    avg_time_variance: varianceCount > 0 ? varianceSum / varianceCount : null
+  };
+}
+
+function parseJournal(pages) {
+  const moods = [], energies = [];
+
+  pages.forEach(page => {
+    const props = page.properties;
+
+    const mood = props?.["Mood"]?.select?.name ||
+                 props?.["Mood"]?.rich_text?.[0]?.plain_text || null;
+    const energy = props?.["Energy"]?.select?.name ||
+                   props?.["Energy"]?.rich_text?.[0]?.plain_text || null;
+
+    if (mood) moods.push(mood);
+    if (energy) energies.push(energy);
+  });
+
+  return { entries: pages.length, moods, energies };
+}
+
+// ─── RENDER ───────────────────────────────────────────────
+function renderData() {
+  const habits = habitData?.habits || [];
+  const totalDone  = habits.reduce((s, h) => s + (h.done || 0), 0);
+  const totalSlots = habits.reduce((s, h) => s + (h.total || 0), 0);
+  const habitPct = totalSlots > 0 ? Math.round((totalDone / totalSlots) * 100) : 0;
+
+  const taskDone  = taskData?.done  || 0;
+  const taskTotal = taskData?.total || 0;
+  const taskMissed = taskData?.missed || 0;
+  const completionRate = taskTotal > 0 ? Math.round((taskDone / taskTotal) * 100) : 0;
+  const variance = taskData?.avg_time_variance;
+
+  const hClass = habitPct >= 70 ? "good" : habitPct >= 40 ? "mid" : "low";
+  const tClass = completionRate >= 70 ? "good" : completionRate >= 40 ? "mid" : "low";
+
+  // Metrics row
+  let metricsHtml = `
+    <div class="metric">
+      <div class="metric-label">Days logged</div>
+      <div class="metric-value neutral">${habitData?.days || 0}</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Habit completion</div>
+      <div class="metric-value ${hClass}">${habitPct}%</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Tasks done</div>
+      <div class="metric-value ${tClass}">${taskDone}/${taskTotal}</div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Tasks missed</div>
+      <div class="metric-value ${taskMissed > 0 ? "low" : "good"}">${taskMissed}</div>
+    </div>`;
+  if (variance !== null && variance !== undefined) {
+    metricsHtml += `
+    <div class="metric">
+      <div class="metric-label">Avg time variance</div>
+      <div class="metric-value ${variance > 10 ? "low" : variance < -5 ? "good" : "mid"}">
+        ${variance > 0 ? "+" : ""}${Math.round(variance)}m
+      </div>
+    </div>`;
+  }
+  document.getElementById("metrics-row").innerHTML = metricsHtml;
+
+  // Habits
+  const sorted = [...habits].sort((a, b) =>
+    (b.done / Math.max(b.total, 1)) - (a.done / Math.max(a.total, 1))
+  );
+  document.getElementById("habits-list").innerHTML = sorted.length === 0
+    ? `<p style="color:var(--muted);font-size:13px">No habit data found for this week.</p>`
+    : sorted.map(h => {
+        const pct = h.total > 0 ? Math.round((h.done / h.total) * 100) : 0;
+        const bc = pct >= 70 ? "var(--green)" : pct >= 40 ? "var(--yellow)" : "var(--red)";
+        return `<div class="habit-item">
+          <div class="habit-name">${h.name}</div>
+          <div class="habit-bar-wrap">
+            <div class="habit-bar" style="width:${pct}%;background:${bc}"></div>
+          </div>
+          <div class="habit-count">${h.done}/${h.total}</div>
+        </div>`;
+      }).join("");
+
+  // Sprints
+  const sprints = taskData?.sprints || {};
+  document.getElementById("sprint-list").innerHTML = Object.keys(sprints).length === 0
+    ? `<p style="color:var(--muted);font-size:13px">No tasks found for this week.</p>`
+    : Object.entries(sprints).map(([name, count]) => {
+        const color = SPRINT_COLORS[name] || "#8a85a8";
+        return `<div class="sprint-item" style="background:${color}18;border-left-color:${color}">
+          <span class="sprint-name">${name}</span>
+          <span class="sprint-count">${count} task${count !== 1 ? "s" : ""}</span>
+        </div>`;
+      }).join("");
+
+  // Mood & energy
+  const moods    = journalData?.moods    || [];
+  const energies = journalData?.energies || [];
+  if (moods.length > 0 || energies.length > 0) {
+    document.getElementById("mood-card").style.display = "block";
+    document.getElementById("mood-chips").innerHTML =
+      moods.length > 0 ? moods.map(m => `<span class="chip">${m}</span>`).join("") : `<span class="chip">—</span>`;
+    document.getElementById("energy-chips").innerHTML =
+      energies.length > 0 ? energies.map(e => `<span class="chip">${e}</span>`).join("") : `<span class="chip">—</span>`;
+  }
+
+  generateAnalysis();
+}
+
+// ─── AI ANALYSIS ──────────────────────────────────────────
+async function generateAnalysis() {
+  setStep(4);
+  const el = document.getElementById("analysis-text");
+  el.textContent = "Generating your weekly analysis...";
+  el.className = "analysis-text loading pulsing";
+  document.getElementById("regen-btn").disabled = true;
+  document.getElementById("copy-btn").style.display = "none";
+
+  const weekStr   = fmtDisplay(currentStart) + " – " + fmtDisplay(currentEnd);
+  const habits    = habitData?.habits || [];
+  const topHabits = habits.filter(h => h.total > 0 && (h.done / h.total) >= 0.7).map(h => h.name).join(", ") || "none";
+  const lowHabits = habits.filter(h => h.total > 0 && (h.done / h.total) < 0.4).map(h => h.name).join(", ") || "none";
+  const sprints   = taskData?.sprints || {};
+  const topSprint = Object.entries(sprints).sort((a, b) => b[1] - a[1])[0]?.[0] || "unknown";
+  const moods     = journalData?.moods    || [];
+  const energies  = journalData?.energies || [];
+  const variance  = taskData?.avg_time_variance;
+  const habitPct  = habits.reduce((s, h) => s + (h.total || 0), 0) > 0
+    ? Math.round((habits.reduce((s, h) => s + (h.done || 0), 0) /
+                  habits.reduce((s, h) => s + (h.total || 0), 0)) * 100)
+    : 0;
+
+  const prompt = `You are a warm, insightful life coach for a neurodivergent (AuDHD) freelance illustrator and designer building healthy habits and a creative practice.
+
+Week of ${weekStr}:
+
+MORNING HABITS:
+- Overall completion: ${habitPct}%
+- Strong habits (≥70%): ${topHabits}
+- Needs attention (<40%): ${lowHabits}
+
+TASKS:
+- Total: ${taskData?.total || 0}, Done: ${taskData?.done || 0}, Missed: ${taskData?.missed || 0}
+- Most active sprint: ${topSprint}
+- Sprint breakdown: ${JSON.stringify(sprints)}
+- Avg time variance: ${variance !== null && variance !== undefined
+    ? (variance > 0 ? "+" + Math.round(variance) + " min (taking longer than estimated)" : Math.round(variance) + " min (finishing faster than estimated)")
+    : "not enough data"}
+
+MOOD & ENERGY:
+- Moods this week: ${moods.join(", ") || "not logged"}
+- Energy levels: ${energies.join(", ") || "not logged"}
+
+Write a personal weekly analysis in 4 short paragraphs:
+1. Honest overall read of the week
+2. Specific wins worth celebrating
+3. Growth edges with one tiny concrete suggestion each
+4. Cross-pattern insight — something interesting about how mood/energy/habits/tasks relate
+
+Warm, direct, curious tone. No bullet points. No headers. Under 250 words.`;
+
+  try {
+    const text = await callClaude(prompt);
+    el.textContent = text;
+    el.className = "analysis-text";
+    document.getElementById("regen-btn").disabled = false;
+    document.getElementById("copy-btn").style.display = "inline-block";
+    await saveToNotion(text);
+  } catch(e) {
+    el.textContent = "Could not generate analysis: " + e.message;
+    el.className = "analysis-text";
+    document.getElementById("regen-btn").disabled = false;
+  }
+}
+
+// ─── SAVE TO NOTION ───────────────────────────────────────
+async function saveToNotion(analysis) {
+  setStep(5);
+  showStatus("Saving to Notion...", "success");
+
+  const weekLabel = fmtDisplay(currentStart) + " – " + fmtDisplay(currentEnd);
+  const habits    = habitData?.habits || [];
+  const habitPct  = habits.reduce((s, h) => s + (h.total || 0), 0) > 0
+    ? Math.round((habits.reduce((s, h) => s + (h.done || 0), 0) /
+                  habits.reduce((s, h) => s + (h.total || 0), 0)) * 100)
+    : 0;
+  const sprints   = taskData?.sprints || {};
+  const topSprint = Object.entries(sprints).sort((a, b) => b[1] - a[1])[0]?.[0] || "";
+  const lowHabits = habits.filter(h => h.total > 0 && (h.done / h.total) < 0.4).map(h => h.name).join(", ") || "none";
+  const moods     = (journalData?.moods    || []).join(", ") || "";
+  const energies  = (journalData?.energies || []).join(", ") || "";
+  const variance  = taskData?.avg_time_variance;
+
+  try {
+    await notionCreate({
+      parent: { database_id: ANALYSIS_DB },
+      properties: {
+        "Week":                { title: [{ text: { content: weekLabel } }] },
+        "Week Start":          { date:  { start: fmtDate(currentStart) } },
+        "Habit Completion %":  { number: habitPct },
+        "Tasks Completed":     { number: taskData?.done    || 0 },
+        "Tasks Missed":        { number: taskData?.missed  || 0 },
+        "Top Sprints":         { rich_text: [{ text: { content: topSprint } }] },
+        "Neglected Life Areas":{ rich_text: [{ text: { content: lowHabits } }] },
+        "Avg Mood":            { rich_text: [{ text: { content: moods } }] },
+        "Avg Energy":          { rich_text: [{ text: { content: energies } }] },
+        "Time Variance Trend": { rich_text: [{ text: { content: variance !== null ? (variance > 0 ? "+" + Math.round(variance) + "m" : Math.round(variance) + "m") : "" } }] },
+        "AI Analysis":         { rich_text: [{ text: { content: analysis.slice(0, 2000) } }] }
+      }
+    });
+    showStatus("✓ Saved to Notion", "success");
+  } catch(e) {
+    showStatus("⚠ Could not save to Notion: " + e.message, "error");
+  }
+}
+
+// ─── COPY ─────────────────────────────────────────────────
+function copyAnalysis() {
+  const text = document.getElementById("analysis-text").textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById("copy-btn");
+    btn.textContent = "Copied!";
+    setTimeout(() => btn.textContent = "Copy text", 2000);
+  });
+}
+
+// Allow Enter key on token input
+document.getElementById("token-input").addEventListener("keydown", e => {
+  if (e.key === "Enter") connect();
+});
+</script>
+
+</body>
+</html>
