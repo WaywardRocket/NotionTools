@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
@@ -30,285 +29,284 @@
     padding: 0 0 80px;
   }
 
-/* HEADER */
-.header {
-background: linear-gradient(135deg, #1a1828 0%, #231f35 100%);
-border-bottom: 1px solid var(–border);
-padding: 28px 32px 24px;
-display: flex;
-align-items: center;
-gap: 16px;
-}
-.header-icon { font-size: 32px; }
-.header-text h1 {
-font-family: ‘DM Serif Display’, serif;
-font-size: 22px;
-color: var(–accent);
-letter-spacing: -0.3px;
-}
-.header-text p {
-font-size: 12px;
-color: var(–muted);
-margin-top: 2px;
-font-family: ‘DM Mono’, monospace;
-letter-spacing: 0.5px;
-}
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, #1a1828 0%, #231f35 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 32px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .header-icon { font-size: 32px; }
+  .header-text h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: -0.3px;
+  }
+  .header-text p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.5px;
+  }
 
-/* MAIN LAYOUT */
-.container { max-width: 780px; margin: 0 auto; padding: 32px 20px 0; }
+  /* MAIN LAYOUT */
+  .container { max-width: 780px; margin: 0 auto; padding: 32px 20px 0; }
 
-/* TOKEN SETUP */
-#setup-section {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: var(–radius);
-padding: 32px;
-margin-bottom: 24px;
-}
-#setup-section h2 {
-font-family: ‘DM Serif Display’, serif;
-font-size: 18px;
-color: var(–accent);
-margin-bottom: 8px;
-}
-#setup-section p {
-font-size: 13px;
-color: var(–muted);
-margin-bottom: 20px;
-line-height: 1.6;
-}
-.token-row { display: flex; gap: 10px; }
-.token-input {
-flex: 1;
-background: var(–surface2);
-border: 1px solid var(–border);
-border-radius: 8px;
-color: var(–text);
-font-family: ‘DM Mono’, monospace;
-font-size: 13px;
-padding: 11px 14px;
-outline: none;
-transition: border-color 0.2s;
-}
-.token-input:focus { border-color: var(–accent); }
-.btn {
-background: var(–accent);
-color: var(–bg);
-border: none;
-border-radius: 8px;
-padding: 11px 20px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 13px;
-font-weight: 500;
-cursor: pointer;
-transition: opacity 0.2s;
-white-space: nowrap;
-}
-.btn:hover { opacity: 0.85; }
-.btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-ghost {
-background: transparent;
-color: var(–accent);
-border: 1px solid var(–border);
-}
-.btn-ghost:hover { border-color: var(–accent); background: rgba(184,169,245,0.06); }
+  /* TOKEN SETUP */
+  #setup-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  #setup-section h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  #setup-section p {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .token-row { display: flex; gap: 10px; }
+  .token-input {
+    flex: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .token-input:focus { border-color: var(--accent); }
+  .btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    padding: 11px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .btn:hover { opacity: 0.85; }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: var(--accent); background: rgba(184,169,245,0.06); }
 
-/* WEEK NAV */
-#main-section { display: none; }
-.week-nav {
-display: flex;
-align-items: center;
-justify-content: space-between;
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: var(–radius);
-padding: 16px 20px;
-margin-bottom: 16px;
-}
-.week-label {
-font-family: ‘DM Serif Display’, serif;
-font-size: 17px;
-color: var(–text);
-}
-.nav-btns { display: flex; gap: 8px; }
+  /* WEEK NAV */
+  #main-section { display: none; }
+  .week-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .week-label {
+    font-family: 'DM Serif Display', serif;
+    font-size: 17px;
+    color: var(--text);
+  }
+  .nav-btns { display: flex; gap: 8px; }
 
-/* PROGRESS STEPS */
-.steps {
-display: flex;
-align-items: center;
-gap: 0;
-margin-bottom: 24px;
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: var(–radius);
-padding: 14px 20px;
-overflow-x: auto;
-}
-.step {
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-color: var(–muted);
-white-space: nowrap;
-padding: 4px 8px;
-border-radius: 6px;
-transition: all 0.3s;
-}
-.step.active { color: var(–accent); background: rgba(184,169,245,0.12); }
-.step.done { color: var(–green); }
-.step-arrow { color: var(–border); font-size: 10px; padding: 0 2px; }
+  /* PROGRESS STEPS */
+  .steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    overflow-x: auto;
+  }
+  .step {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+  .step.active { color: var(--accent); background: rgba(184,169,245,0.12); }
+  .step.done { color: var(--green); }
+  .step-arrow { color: var(--border); font-size: 10px; padding: 0 2px; }
 
-/* CARDS */
-.card {
-background: var(–surface);
-border: 1px solid var(–border);
-border-radius: var(–radius);
-padding: 24px;
-margin-bottom: 16px;
-}
-.card-title {
-font-family: ‘DM Serif Display’, serif;
-font-size: 15px;
-color: var(–accent);
-margin-bottom: 16px;
-display: flex;
-align-items: center;
-gap: 8px;
-}
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 15px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-/* METRICS */
-.metrics-row {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-gap: 12px;
-margin-bottom: 16px;
-}
-.metric {
-background: var(–surface2);
-border: 1px solid var(–border);
-border-radius: 10px;
-padding: 16px;
-text-align: center;
-}
-.metric-label {
-font-size: 10px;
-color: var(–muted);
-font-family: ‘DM Mono’, monospace;
-letter-spacing: 0.5px;
-text-transform: uppercase;
-margin-bottom: 6px;
-}
-.metric-value {
-font-family: ‘DM Serif Display’, serif;
-font-size: 26px;
-line-height: 1;
-}
-.metric-value.good { color: var(–green); }
-.metric-value.mid { color: var(–yellow); }
-.metric-value.low { color: var(–red); }
-.metric-value.neutral { color: var(–text); }
+  /* METRICS */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .metric {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .metric-label {
+    font-size: 10px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .metric-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 26px;
+    line-height: 1;
+  }
+  .metric-value.good { color: var(--green); }
+  .metric-value.mid { color: var(--yellow); }
+  .metric-value.low { color: var(--red); }
+  .metric-value.neutral { color: var(--text); }
 
-/* HABITS LIST */
-.habit-item {
-display: flex;
-align-items: center;
-gap: 12px;
-padding: 10px 0;
-border-bottom: 1px solid var(–border);
-}
-.habit-item:last-child { border-bottom: none; }
-.habit-name { flex: 1; font-size: 13px; }
-.habit-bar-wrap {
-width: 100px;
-height: 6px;
-background: var(–surface2);
-border-radius: 3px;
-overflow: hidden;
-}
-.habit-bar { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
-.habit-count { font-family: ‘DM Mono’, monospace; font-size: 11px; color: var(–muted); width: 36px; text-align: right; }
+  /* HABITS LIST */
+  .habit-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .habit-item:last-child { border-bottom: none; }
+  .habit-name { flex: 1; font-size: 13px; }
+  .habit-bar-wrap {
+    width: 100px;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .habit-bar { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .habit-count { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); width: 36px; text-align: right; }
 
-/* SPRINT LIST */
-.sprint-item {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 10px 14px;
-border-radius: 8px;
-margin-bottom: 8px;
-border-left: 3px solid;
-}
-.sprint-name { font-size: 13px; }
-.sprint-count {
-font-family: ‘DM Mono’, monospace;
-font-size: 12px;
-color: var(–muted);
-}
+  /* SPRINT LIST */
+  .sprint-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    border-left: 3px solid;
+  }
+  .sprint-name { font-size: 13px; }
+  .sprint-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+  }
 
-/* ANALYSIS */
-.analysis-text {
-font-size: 14px;
-line-height: 1.8;
-color: var(–text);
-white-space: pre-wrap;
-}
-.analysis-text.loading { color: var(–muted); font-style: italic; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-.pulsing { animation: pulse 1.8s ease-in-out infinite; }
-.analysis-actions { display: flex; gap: 10px; margin-top: 16px; }
+  /* ANALYSIS */
+  .analysis-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+    white-space: pre-wrap;
+  }
+  .analysis-text.loading { color: var(--muted); font-style: italic; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .pulsing { animation: pulse 1.8s ease-in-out infinite; }
+  .analysis-actions { display: flex; gap: 10px; margin-top: 16px; }
 
-/* STATUS */
-.status { font-family: ‘DM Mono’, monospace; font-size: 12px; padding: 8px 0; min-height: 28px; }
-.status.success { color: var(–green); }
-.status.error { color: var(–red); }
+  /* STATUS */
+  .status { font-family: 'DM Mono', monospace; font-size: 12px; padding: 8px 0; min-height: 28px; }
+  .status.success { color: var(--green); }
+  .status.error { color: var(--red); }
 
-/* LOADING / ERROR */
-.loading-state, .error-state {
-text-align: center;
-padding: 48px 24px;
-color: var(–muted);
-}
-.loading-dots span {
-display: inline-block;
-width: 8px; height: 8px;
-background: var(–accent);
-border-radius: 50%;
-margin: 0 3px;
-animation: bounce 1.2s ease-in-out infinite;
-}
-.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
-.loading-label { font-family: ‘DM Mono’, monospace; font-size: 12px; color: var(–muted); margin-top: 16px; }
+  /* LOADING / ERROR */
+  .loading-state, .error-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+  }
+  .loading-dots span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    margin: 0 3px;
+    animation: bounce 1.2s ease-in-out infinite;
+  }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+  .loading-label { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); margin-top: 16px; }
 
-/* DISCONNECT */
-.disconnect-wrap { text-align: right; margin-bottom: 8px; }
-.disconnect-btn {
-background: none; border: none;
-font-size: 11px; color: var(–muted);
-cursor: pointer; font-family: ‘DM Mono’, monospace;
-text-decoration: underline;
-}
-.disconnect-btn:hover { color: var(–text); }
+  /* DISCONNECT */
+  .disconnect-wrap { text-align: right; margin-bottom: 8px; }
+  .disconnect-btn {
+    background: none; border: none;
+    font-size: 11px; color: var(--muted);
+    cursor: pointer; font-family: 'DM Mono', monospace;
+    text-decoration: underline;
+  }
+  .disconnect-btn:hover { color: var(--text); }
 
-/* MOOD CHIPS */
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.chip {
-font-size: 11px;
-font-family: ‘DM Mono’, monospace;
-padding: 4px 10px;
-border-radius: 20px;
-background: var(–surface2);
-border: 1px solid var(–border);
-color: var(–muted);
-}
+  /* MOOD CHIPS */
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .chip {
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
 
-@media (max-width: 500px) {
-.header { padding: 20px 16px; }
-.container { padding: 20px 12px 0; }
-.metrics-row { grid-template-columns: 1fr 1fr; }
-}
+  @media (max-width: 500px) {
+    .header { padding: 20px 16px; }
+    .container { padding: 20px 12px 0; }
+    .metrics-row { grid-template-columns: 1fr 1fr; }
+  }
 </style>
-
 </head>
 <body>
 
@@ -323,7 +321,6 @@ color: var(–muted);
 <div class="container">
 
   <!-- SETUP -->
-
   <div id="setup-section">
     <h2>Connect to Notion</h2>
     <p>Paste your Notion integration token below. It's stored only in your browser session and used to read your habit and task data.</p>
@@ -335,91 +332,87 @@ color: var(–muted);
   </div>
 
   <!-- MAIN -->
-
   <div id="main-section">
     <div class="disconnect-wrap">
       <button class="disconnect-btn" onclick="disconnect()">✕ disconnect</button>
     </div>
 
-```
-<!-- Week nav -->
-<div class="week-nav">
-  <div class="nav-btns">
-    <button class="btn btn-ghost" onclick="changeWeek(-1)">← Prev</button>
-  </div>
-  <div class="week-label" id="week-label">—</div>
-  <div class="nav-btns">
-    <button class="btn btn-ghost" onclick="changeWeek(1)">Next →</button>
-  </div>
-</div>
-
-<!-- Steps -->
-<div class="steps">
-  <div class="step" id="step1">1 · Habits</div>
-  <div class="step-arrow">›</div>
-  <div class="step" id="step2">2 · Tasks</div>
-  <div class="step-arrow">›</div>
-  <div class="step" id="step3">3 · Mood</div>
-  <div class="step-arrow">›</div>
-  <div class="step" id="step4">4 · Generate</div>
-  <div class="step-arrow">›</div>
-  <div class="step" id="step5">5 · Save</div>
-</div>
-
-<!-- Loading -->
-<div class="loading-state" id="loading-state" style="display:none">
-  <div class="loading-dots"><span></span><span></span><span></span></div>
-  <div class="loading-label" id="loading-label">Loading your data...</div>
-</div>
-
-<!-- Error -->
-<div class="error-state" id="error-state" style="display:none"></div>
-
-<!-- Data -->
-<div id="data-section" style="display:none">
-
-  <!-- Metrics -->
-  <div class="metrics-row" id="metrics-row"></div>
-
-  <!-- Habits -->
-  <div class="card">
-    <div class="card-title">🌅 Morning habits</div>
-    <div id="habits-list"></div>
-  </div>
-
-  <!-- Sprints -->
-  <div class="card">
-    <div class="card-title">⚡ Tasks by sprint</div>
-    <div id="sprint-list"></div>
-  </div>
-
-  <!-- Mood -->
-  <div class="card" id="mood-card" style="display:none">
-    <div class="card-title">🌡 Mood &amp; energy</div>
-    <div style="margin-bottom:10px">
-      <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px">MOOD</div>
-      <div class="chips" id="mood-chips"></div>
+    <!-- Week nav -->
+    <div class="week-nav">
+      <div class="nav-btns">
+        <button class="btn btn-ghost" onclick="changeWeek(-1)">← Prev</button>
+      </div>
+      <div class="week-label" id="week-label">—</div>
+      <div class="nav-btns">
+        <button class="btn btn-ghost" onclick="changeWeek(1)">Next →</button>
+      </div>
     </div>
-    <div>
-      <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px">ENERGY</div>
-      <div class="chips" id="energy-chips"></div>
+
+    <!-- Steps -->
+    <div class="steps">
+      <div class="step" id="step1">1 · Habits</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step2">2 · Tasks</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step3">3 · Mood</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step4">4 · Generate</div>
+      <div class="step-arrow">›</div>
+      <div class="step" id="step5">5 · Save</div>
     </div>
-  </div>
 
-  <!-- Analysis -->
-  <div class="card">
-    <div class="card-title">✨ AI analysis</div>
-    <div class="analysis-text loading pulsing" id="analysis-text">Generating your weekly analysis...</div>
-    <div class="analysis-actions">
-      <button class="btn btn-ghost" id="regen-btn" onclick="generateAnalysis()" disabled>Regenerate ↺</button>
-      <button class="btn btn-ghost" id="copy-btn" onclick="copyAnalysis()" style="display:none">Copy text</button>
+    <!-- Loading -->
+    <div class="loading-state" id="loading-state" style="display:none">
+      <div class="loading-dots"><span></span><span></span><span></span></div>
+      <div class="loading-label" id="loading-label">Loading your data...</div>
     </div>
-    <div class="status" id="status-msg"></div>
-  </div>
 
-</div>
-```
+    <!-- Error -->
+    <div class="error-state" id="error-state" style="display:none"></div>
 
+    <!-- Data -->
+    <div id="data-section" style="display:none">
+
+      <!-- Metrics -->
+      <div class="metrics-row" id="metrics-row"></div>
+
+      <!-- Habits -->
+      <div class="card">
+        <div class="card-title">🌅 Morning habits</div>
+        <div id="habits-list"></div>
+      </div>
+
+      <!-- Sprints -->
+      <div class="card">
+        <div class="card-title">⚡ Tasks by sprint</div>
+        <div id="sprint-list"></div>
+      </div>
+
+      <!-- Mood -->
+      <div class="card" id="mood-card" style="display:none">
+        <div class="card-title">🌡 Mood &amp; energy</div>
+        <div style="margin-bottom:10px">
+          <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px">MOOD</div>
+          <div class="chips" id="mood-chips"></div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:6px">ENERGY</div>
+          <div class="chips" id="energy-chips"></div>
+        </div>
+      </div>
+
+      <!-- Analysis -->
+      <div class="card">
+        <div class="card-title">✨ AI analysis</div>
+        <div class="analysis-text loading pulsing" id="analysis-text">Generating your weekly analysis...</div>
+        <div class="analysis-actions">
+          <button class="btn btn-ghost" id="regen-btn" onclick="generateAnalysis()" disabled>Regenerate ↺</button>
+          <button class="btn btn-ghost" id="copy-btn" onclick="copyAnalysis()" style="display:none">Copy text</button>
+        </div>
+        <div class="status" id="status-msg"></div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -926,6 +919,5 @@ document.getElementById("token-input").addEventListener("keydown", e => {
   if (e.key === "Enter") connect();
 });
 </script>
-
 </body>
 </html>
